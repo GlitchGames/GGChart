@@ -308,6 +308,33 @@ function GGChart:destroy()
 		os.remove( system.pathForFile( self.filename, system.DocumentsDirectory ) )
 	end
 	
+	local filename = self.filename
+	local t = nil
+	
+	local removeFile = function()
+	
+		if filename then
+			local result = os.remove( system.pathForFile( filename, system.DocumentsDirectory ) )
+			if result then
+				print("Destroyed file:", filename )
+			else
+				print("WARNING! Failed to destroy file:", filename )
+			end
+		end
+		
+		if t then
+			timer.cancel( t )
+		end
+		t = nil
+		
+	end
+	
+	
+	t = timer.performWithDelay(100, removeFile, 1 )
+	
+end 
+
+	
 end
 
 return GGChart
